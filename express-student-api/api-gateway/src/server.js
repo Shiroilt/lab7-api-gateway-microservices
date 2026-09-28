@@ -3,7 +3,7 @@ const http = require("http");
 const https = require("https");
 
 const app = express();
-const PORT = Number(process.env.GATEWAY_PORT || 3000);
+const PORT = Number(process.env.PORT || process.env.GATEWAY_PORT || 3000);
 
 const services = {
   users: {
