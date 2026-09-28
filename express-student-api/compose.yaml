@@ -1,0 +1,70 @@
+services:
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      GATEWAY_PORT: 3000
+      USER_SERVICE_URL: ${USER_SERVICE_URL:-http://user-service:3001}
+      PRODUCT_SERVICE_URL: ${PRODUCT_SERVICE_URL:-http://product-service:3002}
+      ORDER_SERVICE_URL: ${ORDER_SERVICE_URL:-http://order-service:3003}
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+    networks: [campus-network]
+
+  user-service:
+    build: ./user-service
+    environment:
+      USER_SERVICE_PORT: 3001
+      MONGO_URI: mongodb://user-db:27017/usersdb
+    depends_on: [user-db]
+    networks: [campus-network]
+
+  product-service:
+    build: ./product-service
+    environment:
+      PRODUCT_SERVICE_PORT: 3002
+      MONGO_URI: mongodb://product-db:27017/productsdb
+    depends_on: [product-db]
+    networks: [campus-network]
+
+  order-service:
+    build: ./order-service
+    environment:
+      ORDER_SERVICE_PORT: 3003
+      MONGO_URI: mongodb://order-db:27017/ordersdb
+      USER_SERVICE_URL: ${USER_SERVICE_URL:-http://user-service:3001}
+      PRODUCT_SERVICE_URL: ${PRODUCT_SERVICE_URL:-http://product-service:3002}
+    depends_on:
+      - user-db
+      - product-db
+      - order-db
+      - user-service
+      - product-service
+    networks: [campus-network]
+
+  user-db:
+    image: mongo:7
+    volumes: [user-db-data:/data/db]
+    networks: [campus-network]
+
+  product-db:
+    image: mongo:7
+    volumes: [product-db-data:/data/db]
+    networks: [campus-network]
+
+  order-db:
+    image: mongo:7
+    volumes: [order-db-data:/data/db]
+    networks: [campus-network]
+
+volumes:
+  user-db-data:
+  product-db-data:
+  order-db-data:
+
+networks:
+  campus-network:
+    driver: bridge

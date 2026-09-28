@@ -1,0 +1,108 @@
+openapi: 3.0.3
+info:
+  title: RESTful Student Management API
+  version: 1.0.0
+  description: Lab 3 Student REST API using Express.js
+servers:
+  - url: http://localhost:3000
+paths:
+  /students:
+    get:
+      summary: List all students
+      responses:
+        '200':
+          description: Students returned successfully
+        '500':
+          description: Unexpected server error
+    post:
+      summary: Create a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '201':
+          description: Student created
+        '400':
+          description: Invalid request body
+  /students/{id}:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Get one student
+      responses:
+        '200':
+          description: Student found
+        '404':
+          description: Student not found
+    put:
+      summary: Update a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '200':
+          description: Student updated
+        '400':
+          description: Invalid request body
+        '404':
+          description: Student not found
+    patch:
+      summary: Partially update a student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentInput'
+      responses:
+        '200':
+          description: Student updated
+        '400':
+          description: Invalid request body
+        '404':
+          description: Student not found
+    delete:
+      summary: Delete a student
+      responses:
+        '204':
+          description: Student deleted
+        '404':
+          description: Student not found
+components:
+  schemas:
+    StudentInput:
+      type: object
+      required: [name, email, course, semester]
+      properties:
+        name:
+          type: string
+          example: Aarav Patel
+        email:
+          type: string
+          format: email
+          example: aarav@example.com
+        course:
+          type: string
+          example: Computer Science
+        semester:
+          type: integer
+          minimum: 1
+          example: 5
+    Student:
+      allOf:
+        - $ref: '#/components/schemas/StudentInput'
+        - type: object
+          properties:
+            id:
+              type: integer
+              readOnly: true

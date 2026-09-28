@@ -1,0 +1,120 @@
+{
+  "info": {
+    "_postman_id": "lab3-restful-web-services",
+    "name": "RESTful Web Services \u2013 Lab 3",
+    "description": "CRUD and negative tests for the Lab 3 Student API. Run Express on port 3000 or Spring Boot on port 8080.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "studentId",
+      "value": "1"
+    }
+  ],
+  "item": [
+    {
+      "name": "GET - List Students",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students"
+      }
+    },
+    {
+      "name": "GET - Student by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students/{{studentId}}"
+      }
+    },
+    {
+      "name": "GET - Invalid ID (404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students/9999"
+      }
+    },
+    {
+      "name": "POST - Create Student (201)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Aarav Patel\",\n  \"email\": \"newstudent@example.com\",\n  \"course\": \"Computer Science\",\n  \"semester\": 5\n}"
+        },
+        "url": "{{baseUrl}}/students"
+      }
+    },
+    {
+      "name": "POST - Invalid Body (400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"email\": \"invalid-email\",\n  \"semester\": -2\n}"
+        },
+        "url": "{{baseUrl}}/students"
+      }
+    },
+    {
+      "name": "PUT - Update Student",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Updated Student\",\n  \"email\": \"updated@example.com\",\n  \"course\": \"Information Technology\",\n  \"semester\": 6\n}"
+        },
+        "url": "{{baseUrl}}/students/{{studentId}}"
+      }
+    },
+    {
+      "name": "PATCH - Partial Update",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"semester\": 7\n}"
+        },
+        "url": "{{baseUrl}}/students/{{studentId}}"
+      }
+    },
+    {
+      "name": "DELETE - Delete Student",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/students/{{studentId}}"
+      }
+    }
+  ]
+}

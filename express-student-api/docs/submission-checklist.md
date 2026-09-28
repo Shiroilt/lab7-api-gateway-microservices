@@ -1,0 +1,15 @@
+# Lab 7 Checklist
+- [ ] Gateway source and Dockerfile
+- [ ] Compose updated
+- [ ] Only gateway externally exposed
+- [ ] Service URLs in environment variables
+- [ ] /users, /products, /orders routed
+- [ ] /health
+- [ ] Logging
+- [ ] 502/503 unavailable-service test
+- [ ] Configuration change proven
+- [ ] Cloud deployment evidence
+- [ ] Public gateway URL
+- [ ] Postman local and cloud tests
+- [ ] README and architecture diagram
+- [ ] 5–8 line reflection

@@ -1,0 +1,11 @@
+node_modules/
+target/
+.idea/
+.vscode/
+*.log
+
+# Environment files / secrets
+.env
+.env.*
+!.env.example
+!lab7-config.env

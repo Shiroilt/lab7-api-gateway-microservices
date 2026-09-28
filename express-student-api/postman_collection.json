@@ -1,0 +1,15 @@
+{
+  "info":{"name":"Microservices – Lab 7 Gateway","schema":"https://schema.getpostman.com/json/collection/v2.1.0/collection.json"},
+  "variable":[
+    {"key":"baseUrl","value":"http://localhost:3000"},
+    {"key":"userId","value":"6ab64279acf82b7eade174a9"},
+    {"key":"productId","value":"6ab642798cb2b5dc3a89819c"}
+  ],
+  "item":[
+    {"name":"GET /health","request":{"method":"GET","url":"{{baseUrl}}/health"}},
+    {"name":"GET /users","request":{"method":"GET","url":"{{baseUrl}}/users"}},
+    {"name":"GET /products","request":{"method":"GET","url":"{{baseUrl}}/products"}},
+    {"name":"GET /orders","request":{"method":"GET","url":"{{baseUrl}}/orders"}},
+    {"name":"POST /orders","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{"userId":"{{userId}}","productId":"{{productId}}","quantity":1}"},"url":"{{baseUrl}}/orders"}}
+  ]
+}
