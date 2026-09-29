@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+        - name: order-service
+          image: lab7-order-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3003
+          env:
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: lab8-mongodb
+                  key: MONGODB_URI
+            - name: USER_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lab8-config
+                  key: USER_SERVICE_URL
+            - name: PRODUCT_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lab8-config
+                  key: PRODUCT_SERVICE_URL
